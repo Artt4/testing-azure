@@ -1,14 +1,8 @@
-name: Build and deploy Node.js app to Azure Web App - chess-app
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Add this line for the necessary permission
 
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +18,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      id-token: write  # Add this line for the necessary permission
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
